@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+require 'worktrack'
+
+tracker = WorkTrack.new
+if ARGV[0] == "-show"
+	tracker.dump_changes
+else
+	tracker.run
+end
