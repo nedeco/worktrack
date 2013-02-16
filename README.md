@@ -1,10 +1,10 @@
-==worktrack
+##worktrack
 
 worktrack is provides a small binary that tracks one of your directories for file changes. Assuming your directory has many directories being git repositories underneath.
 
 Whenever a file is modified, removed or added worktrack will search for the git respository this file belongs to and make an entry into it's own database with a timestamp.
 
-=== Installation
+###Installation
 
 Install the gemfile
 
@@ -16,7 +16,7 @@ Start worktrack
 
 worktrack will add a directory called ".worktrack" under your home directory with a config.yml file containing the configuration. By default it will start monitoring the directory ~/Documents for changes and store these changes to a SQLite database under ~/.worktrack/changes.db. 
 
-=== Show work done
+###Show work done
 
 Running the command 
 	
@@ -47,11 +47,11 @@ will show a list of changes made like this:
 		 HEAD modified on 2013-02-16 22:19:33 +0100
 		 5faa2138e310a1b86f129e00b9fa03f3bf94fe added on 2013-02-16 22:19:33 +0100
 
-=== Credits 
+###Credits 
 
 Thanks to the team around guard to provide the listen gem. Thanks to Jan for treating me to track the time spent on work for customers better ;)
 
-=== Todo
+###Todo
 
 Fork, branch, change, commit merge requests. 
 
