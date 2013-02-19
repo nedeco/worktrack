@@ -22,30 +22,31 @@ Running the command
 	
 	worktrack -show
 
-will show a list of changes made like this:
+will show a list of changes made on the month before and the current month like this:
 
 	worktrack - another great nedeco idea
+	5807 changes in 7 Repositories
 
-	18 changes in 1 Repositories
-	worktrack:
-		 test added on 2013-02-16 22:09:07 +0100
-		 test removed on 2013-02-16 22:09:08 +0100
-		 worktrack.rb modified on 2013-02-16 22:15:16 +0100
-		 worktrack.rb modified on 2013-02-16 22:15:36 +0100
-		 worktrack.rb modified on 2013-02-16 22:16:29 +0100
-		 worktrack.rb modified on 2013-02-16 22:16:31 +0100
-		 worktrack.rb modified on 2013-02-16 22:16:40 +0100
-		 worktrack.rb modified on 2013-02-16 22:16:55 +0100
-		 index modified on 2013-02-16 22:19:26 +0100
-		 d177bb10f5dbc889c1c4a273ff36b1e8a7e77b added on 2013-02-16 22:19:26 +0100
-		 COMMIT_EDITMSG modified on 2013-02-16 22:19:33 +0100
-		 index modified on 2013-02-16 22:19:33 +0100
-		 b894001457bf96372e39512655f1303332d9c2 added on 2013-02-16 22:19:33 +0100
-		 2c9d823c762424fa79ad53b693e1c9edcc5b1b added on 2013-02-16 22:19:33 +0100
-		 master modified on 2013-02-16 22:19:33 +0100
-		 master modified on 2013-02-16 22:19:33 +0100
-		 HEAD modified on 2013-02-16 22:19:33 +0100
-		 5faa2138e310a1b86f129e00b9fa03f3bf94fe added on 2013-02-16 22:19:33 +0100
+	calculation timeframe from 2013-01-01 00:00:00 UTC until 2013-02-01 00:00:00 UTC
+	Total minutes worked: 0
+	calculation timeframe from 2013-02-01 00:00:00 UTC until 2013-02-19 22:28:15 +0100
+	worktrack
+		52 minutes 2013-02-16 22:09:07 +0100 - 2013-02-16 23:01:56 +0100
+		37 minutes 2013-02-18 00:18:49 +0100 - 2013-02-18 00:56:06 +0100
+	puppet
+		15 minutes 2013-02-17 09:32:39 +0100 - 2013-02-17 09:47:44 +0100
+		15 minutes 2013-02-18 12:12:45 +0100 - 2013-02-18 12:28:28 +0100
+	rollout_admin
+		15 minutes 2013-02-18 15:28:10 +0100 - 2013-02-18 15:43:11 +0100
+		25 minutes 2013-02-19 07:07:39 +0100 - 2013-02-19 07:33:29 +0100
+	admin-interface
+		60 minutes 2013-02-19 07:50:06 +0100 - 2013-02-19 08:50:15 +0100
+		52 minutes 2013-02-19 09:32:38 +0100 - 2013-02-19 10:24:46 +0100
+		16 minutes 2013-02-19 10:41:08 +0100 - 2013-02-19 10:57:47 +0100
+	syslog-analyzer
+		95 minutes 2013-02-19 13:44:37 +0100 - 2013-02-19 15:20:01 +0100
+	Total minutes worked: 382
+
 
 ###Credits 
 

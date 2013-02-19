@@ -85,20 +85,77 @@ class WorkTrack
 		}		
 	end
 
-	def dump_changes()
-		puts "worktrack - another great nedeco idea\n\n"
-		puts "#{Change.all.count} changes in #{Repo.all.count} Repositories"
-
-		if Repo.all.count == 0 
-			puts "go and do some work before you want to earn respect"
-		else
-			Repo.all.each {|rep|
-				puts "#{rep.name}:"
-				rep.changes.each {|change|
-					puts "\t #{change.filename} #{change.action} on #{change.timestamp}"
-				}
+	def prettyprint(work_frames)
+		# make some nice output
+		if !work_frames.nil?
+			@totalmin=0
+			work_frames.each {|rep|
+				if !rep.nil? && !rep.empty?
+					puts "#{rep.first[:repository]}"
+					rep.each {|work|
+						puts "\t#{work[:amount]} minutes #{work[:from]} - #{work[:to]}"
+						@totalmin = @totalmin + work[:amount]
+					}
+				end
 			}
+			puts "Total minutes worked: #{@totalmin}"
 		end
+	end
+
+
+	def calctimeframe(from, to)
+		puts "calculation timeframe from #{from} until #{to}\n"
+		@work_frames=[]			
+		Repo.all.each {|rep|
+			@work_frames[rep.id] = []
+		}
+		@last_repo=0
+		@last_time=0
+		@starttime=0
+		@endtime=0
+
+		# 15 minutes by 60 seconds
+		@corridor=15*60
+
+		@DB.fetch("select * from changes where timestamp > '#{from}' and timestamp < '#{to}' order by repo_id") do |c|
+			if (c[:repo_id] != @last_repo)
+				@last_repo=c[:repo_id]
+				@last_time=-1
+				if @starttime > 0
+					@endtime = @starttime + @corridor unless @endtime > 0
+					@rep=Repo.where(:id => @last_repo).first
+					@work_frames[@last_repo] << {:repository => @rep.name, :from => Time.at(@starttime), :to => Time.at(@endtime), :amount => (@endtime - @starttime)/60 }
+				end
+				@endtime=0
+				@starttime=0
+			end
+			unless @starttime > 0
+				@starttime=c[:timestamp].to_i 
+				@endtime=@starttime+@corridor
+			end
+
+			if c[:timestamp].to_i < (@endtime + @corridor)
+				@endtime=c[:timestamp].to_i + @corridor
+			else
+				@rep=Repo.where(:id => @last_repo).first
+				@work_frames[@last_repo] << {:repository => @rep.name, :from => Time.at(@starttime), :to => Time.at(@endtime), :amount => (@endtime - @starttime)/60 }
+				@starttime=c[:timestamp].to_i
+				@endtime=@starttime + @corridor
+			end
+			@last_time += 1
+		end
+
+		prettyprint(@work_frames)
+
+	end
+
+	def dump_changes()
+		puts "worktrack - another great nedeco idea\n"
+		puts "#{Change.all.count} changes in #{Repo.all.count} Repositories\n\n"
+
+		calctimeframe(Time.utc(Time.new.year, Time.new.month-1),Time.utc(Time.new.year, Time.new.month))
+		calctimeframe(Time.utc(Time.new.year, Time.new.month),Time.now)
+
 	end
 
 	def run
