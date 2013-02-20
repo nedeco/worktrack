@@ -110,7 +110,6 @@ class WorkTrack
 			@work_frames[rep.id] = []
 		}
 		@last_repo=0
-		@last_time=0
 		@starttime=0
 		@endtime=0
 
@@ -119,8 +118,6 @@ class WorkTrack
 
 		@DB.fetch("select * from changes where timestamp > '#{from}' and timestamp < '#{to}' order by repo_id") do |c|
 			if (c[:repo_id] != @last_repo)
-				@last_repo=c[:repo_id]
-				@last_time=-1
 				if @starttime > 0
 					@endtime = @starttime + @corridor unless @endtime > 0
 					@rep=Repo.where(:id => @last_repo).first
@@ -128,6 +125,7 @@ class WorkTrack
 				end
 				@endtime=0
 				@starttime=0
+				@last_repo=c[:repo_id]
 			end
 			unless @starttime > 0
 				@starttime=c[:timestamp].to_i 
@@ -137,12 +135,15 @@ class WorkTrack
 			if c[:timestamp].to_i < (@endtime + @corridor)
 				@endtime=c[:timestamp].to_i + @corridor
 			else
-				@rep=Repo.where(:id => @last_repo).first
-				@work_frames[@last_repo] << {:repository => @rep.name, :from => Time.at(@starttime), :to => Time.at(@endtime), :amount => (@endtime - @starttime)/60 }
+				@rep=Repo.where(:id => c[:repo_id]).first
+				@work_frames[c[:repo_id]] << {:repository => @rep.name, :from => Time.at(@starttime), :to => Time.at(@endtime), :amount => (@endtime - @starttime)/60 }
 				@starttime=c[:timestamp].to_i
 				@endtime=@starttime + @corridor
 			end
-			@last_time += 1
+		end
+		if @starttime > 0
+			@rep=Repo.where(:id => @last_repo).first
+			@work_frames[@last_repo] << {:repository => @rep.name, :from => Time.at(@starttime), :to => Time.at(@endtime), :amount => (@endtime - @starttime)/60 }
 		end
 
 		prettyprint(@work_frames)
