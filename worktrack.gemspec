@@ -2,7 +2,7 @@ $:.unshift File.expand_path("../lib", __FILE__)
 
 Gem::Specification.new do |gem|
   gem.name        = 'worktrack'
-  gem.version     = '0.0.6'
+  gem.version     = '0.0.7'
   gem.summary     = "track your work in git repositories"
   gem.description = "worktrack is a gem to monitor your projects directory to track work done within all repos within this directory"
   gem.authors     = ["Alexander Balsam"]
@@ -12,4 +12,5 @@ Gem::Specification.new do |gem|
   gem.executables = ["worktrack"]
   gem.add_dependency 'listen'
   gem.add_dependency 'sequel'
+  gem.add_dependency 'sqlite3'
 end
